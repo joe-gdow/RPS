@@ -1,7 +1,4 @@
-# RPS
-#
-# Rock-Paper-Scissors
-#
+# RPS - Rock-Paper-Scissors
 # A rock-paper-scissors game. 
 #
 # When I was young we 

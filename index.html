@@ -14,15 +14,19 @@
 </head>
 
 <body>
+    <div class="gameboard">
+        <img class="background" src ="img/background.gif">
+    </div>
     <div class="buttons">
         <button class="rock">rock!</button>
         <button class="paper">paper!</button>
         <button class="scissors">scissors!</button>
-        <button class="playagain" style="display:none">play again?</button>
     </div>
+    <button class="playagain" style="display:none">play again?</button>
     <div class="score">score: </div>
     <div class="scoreboard"></div>
     <div class="results">results: </div>
+    <div class="gameover"></div>
 </body>
 
 <script>
@@ -33,13 +37,15 @@
     const rock = document.querySelector('.rock');
     const paper = document.querySelector('.paper');
     const scissors = document.querySelector('.scissors');
-    const playagain = document.querySelector('.playagain');
+    const playAgain = document.querySelector('.playagain');
+    const gameOver = document.querySelector('.gameover');
     var condition = "";
     var playerScore = 0;
     var computerScore = 0;
     scoreBoard.textContent = "0 - 0";
 
     buttons.forEach(button => button.addEventListener('click', singleRound));
+    playAgain.addEventListener('click', reset);
 
     function computerPlay() {
         let guess = Math.floor(Math.random() * 3 + 1);
@@ -83,44 +89,26 @@
         }
         
         if (playerScore >= 5) {
-            results.textContent = condition + " - " + proof + "\n" + "----- Game Over! Player wins!";
+            gameOver.textContent = "Game Over! Player wins!";
             buttons.forEach(button => button.style.display = 'none');
-            playagain.style.display = 'inline';
+            playAgain.style.display = 'inline';
         }
         else if (computerScore >= 5) {
-            results.textContent = condition + " - " + proof + "\n" + "----- Game Over! Computer wins!";
+            gameOver.textContent = "Game Over! Computer wins!";
             buttons.forEach(button => button.style.display = 'none');
-            playagain.style.display = 'inline';
+            playAgain.style.display = 'inline';
         }
     }
 
-    function game() {
-        let playerSelection = "";
-        while (playerSelection != "q") {
-            let playerScore = 0;
-            let computerScore = 0;
-            playerSelection = prompt("Rock Paper Scissors! To play a game, type 'play'. To quit, enter 'q'.");
-            if (playerSelection == "play") {
-                prompt("Ok - Best out of 5! Ready?", "Click OK!");
-                while ((playerScore < 3) && (computerScore < 3)) {
-                    singleRound();
-                    console.log(condition);
-                    if (condition == "Win") {
-                        playerScore++;
-                        console.log("Player Score: " + playerScore);
-                    }
-                    else if (condition == "Lose") {
-                        computerScore++;
-                        console.log("Computer Score: " + computerScore);                        
-                    }
-                }
-                if (playerScore > computerScore) {
-                    prompt(`You won the game! ${playerScore} to ${computerScore}`);
-                }
-                else {
-                    prompt(`You lost the game! ${computerScore} to ${playerScore}`);
-                }
-            }
-        }
+    function reset() {
+        playerScore = 0;
+        computerScore = 0;
+        condition = '';
+        proof = '';
+        results.textContent = 'Results: ';
+        scoreBoard.textContent = '0 - 0';
+        buttons.forEach(button => button.style.display = 'initial');
+        playAgain.style.display = 'none';
+        gameOver.textContent = '';
     }
 </script>
